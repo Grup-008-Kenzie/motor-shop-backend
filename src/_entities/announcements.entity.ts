@@ -29,5 +29,5 @@ export class Announcement {
     description: string
 
     @ManyToOne(() => Car)
-    cars: Car;
+    carId: Car;
 }
