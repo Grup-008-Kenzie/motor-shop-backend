@@ -12,6 +12,6 @@ import { Announcement } from "./announcements.entity";
     @Column({type:"varchar", length:20})
     model: string
 
-    @OneToMany(() => Announcement, (announcements) => announcements.carId, { nullable: true })
+    @OneToMany(() => Announcement, (announcements) => announcements.car, { nullable: true })
     annoucements: Announcement[];
 }

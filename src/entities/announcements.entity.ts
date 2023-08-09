@@ -3,7 +3,6 @@ import {Car} from "./cars.entity"
 import { CarImage } from "./carsImages.entity";
 
 @Entity("announcements")
-
 export class Announcement {
     @PrimaryGeneratedColumn("uuid")
     id: string
@@ -30,9 +29,9 @@ export class Announcement {
     description: string
 
     @ManyToOne(() => Car)
-    carId: Car;
+    car: Car;
 
     @OneToOne(() => CarImage, carImage => carImage.announcement)
     @JoinColumn()
-    imageId: CarImage;
+    image: CarImage;
 }
