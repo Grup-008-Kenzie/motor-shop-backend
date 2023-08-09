@@ -15,6 +15,6 @@ import { Announcement } from "./announcements.entity";
     @Column({type:"varchar", length:255})
     second_image: string
 
-    @OneToOne(() => Announcement, ann => ann.imageId)
+    @OneToOne(() => Announcement, ann => ann.image)
     announcement: Announcement;
 }
