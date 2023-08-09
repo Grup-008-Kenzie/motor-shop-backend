@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import {Car} from "./cars.entity"
 import { CarImage } from "./carsImages.entity";
+import { User } from "./users.entity";
 
 @Entity("announcements")
 export class Announcement {
@@ -34,4 +35,7 @@ export class Announcement {
     @OneToOne(() => CarImage, carImage => carImage.announcement)
     @JoinColumn()
     image: CarImage;
+
+    @ManyToOne(() => User)
+    seller: User;
 }
