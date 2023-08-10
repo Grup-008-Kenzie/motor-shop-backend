@@ -21,3 +21,12 @@ export const userSchema = z.object({
 export const userCreateSchema = userSchema.omit({
     id: true, is_seller: true, announcement: true
 })
+
+export const userResponseSchema = userSchema.omit({
+    password: true
+})
+
+export const usersResponseSchema = userResponseSchema.array()
+export const userUpdateSchema = userCreateSchema.partial().omit({
+    cpf: true
+})

@@ -1,22 +1,22 @@
 import { Repository } from "typeorm";
-import { TUserCreate } from "../../interfaces/users";
+import { TUserCreate, TUserUpdate } from "../../interfaces/users";
 import { Address, User } from "../../entities";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/AppError";
 import { hash } from "bcryptjs";
-import { userSchema } from "../../schemas/users";
+import { userResponseSchema, userSchema, usersResponseSchema } from "../../schemas/users";
 
 export const CreateUserService = async (data: TUserCreate) => {
     const { email, cpf, phone_number, address, birthdate, description, name, password } = data
     const userRepo: Repository<User> = AppDataSource.getRepository(User)
+
     const infosCheck = await userRepo
         .createQueryBuilder("user")
         .select("*")
         .where("user.email = :email", { email: email })
         .orWhere("user.cpf = :cpf", { cpf: cpf })
-        .orWhere("phone_number= :phone_number", { phone_number: phone_number })
         .getCount();
-    
+
     if (infosCheck > 0) {
         throw new AppError("Unique user informations already in use", 409)
     }
@@ -36,20 +36,45 @@ export const CreateUserService = async (data: TUserCreate) => {
     return userSchema.parse(newUser)
 
 }
-
-export const GetUsersService = async (data: TUserCreate) => {
-
-
+export const GetUsersService = async () => {
+    const userRepo: Repository<User> = AppDataSource.getRepository(User)
+    const users = await userRepo.find()
+    return usersResponseSchema.parse(users)
 }
-export const RetrieveUserService = async (data: TUserCreate) => {
-
-
+export const RetrieveUserService = async (userId: string) => {
+    const userRepo: Repository<User> = AppDataSource.getRepository(User)
+    const user = await userRepo.findOneBy({ id: userId })
+    return userResponseSchema.parse(user)
 }
-export const UpdateUserService = async (data: TUserCreate) => {
 
+export const UpdateUserService = async (data: TUserUpdate, userId: string) => {
+    const userRepo: Repository<User> = AppDataSource.getRepository(User)
+    const user = await userRepo.findOneByOrFail({ id: userId })
+    const { email, address, birthdate, description, name, password, phone_number } = data
 
+    const emailCheck = await userRepo
+        .createQueryBuilder("user")
+        .where("user.email = :email", { email: email })
+        .getCount()
+
+    if (emailCheck > 0) {
+        throw new AppError("Unique email already in use", 409)
+    }
+
+    if (password) {
+        const hashedPassword = await hash(password, 10);
+        Object.assign(user, { email, phone_number, address, birthdate, description, name, password: hashedPassword });
+    } else {
+        Object.assign(user, { email, phone_number, address, birthdate, description, name });
+    }
+
+    await userRepo.save(user);
+
+    return userResponseSchema.parse(user)
 }
-export const DeleteUserService = async (data: TUserCreate) => {
-
-
+export const DeleteUserService = async (userId: string) => {
+    const userRepo: Repository<User> = AppDataSource.getRepository(User)
+    const user = await userRepo.findOneByOrFail({ id: userId })
+    await userRepo.remove(user)
+    return "User deleted successfully."
 }
