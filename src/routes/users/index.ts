@@ -9,3 +9,7 @@ userRoutes.get("", GetUsersController)
 userRoutes.get("/:id", user, RetrieveUserController)
 userRoutes.patch("/:id", user, UpdateUserController)
 userRoutes.delete("/:id", user, DeleteUserController)
+
+const loginRoutes = Router()
+
+loginRoutes.post("/login", LoginController)

@@ -29,5 +29,8 @@ const DeleteUserController = async (req: Request, res: Response) => {
     return res.status(200).json(result);
 };
 
+const LoginController = async (req: Request, res: Response) => {
+
+}
 
 export { CreateUserController, UpdateUserController, DeleteUserController, RetrieveUserController, GetUsersController }
