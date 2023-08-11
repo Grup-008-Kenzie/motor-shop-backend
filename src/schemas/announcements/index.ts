@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+
 export const announcementSchema = z.object({
   id: z.string(),
   year: z.string().length(4),
@@ -8,13 +9,13 @@ export const announcementSchema = z.object({
   color: z.string().max(30),
   fipe_price: z.string().max(10),
   price: z.string().max(10),
-  description: z.string().max(100),
-  carId: z.string()
+  description: z.string().max(100).optional()
 })
 
+export const announcementsSchema = z.array(announcementSchema)
+
 export const announcementSchemaRequest = announcementSchema.omit({
-  id: true,
-  carId: true
+  id: true
 })
 
 export const updatedAnnouncementSchema = announcementSchemaRequest.partial()
