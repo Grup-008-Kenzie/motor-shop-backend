@@ -15,6 +15,8 @@ const createAnnouncement = async (
   res: Response
 ) => {
   const { id: userId } = res.locals;
+  const data = announcementSchemaRequest.parse(requestData);
+
   const car = await carRepository.findOne({
     where: {
       brand: requestData.brand,
@@ -30,11 +32,11 @@ const createAnnouncement = async (
     },
   });
 
-  if (!user || car) throw new AppError("User or car not found", 404);
+  if (!user) throw new AppError("User not found", 404);
 
-  const front_image: string = requestData.front_image;
-  const first_image: string = requestData.first_image;
-  const second_image: string = requestData.second_image;
+  const { brand, model, front_image, first_image, second_image, ...payload } =
+    data;
+
   const carImage: CarImage = carImageRepository.create({
     front_image: front_image,
     first_image: first_image,
@@ -42,7 +44,6 @@ const createAnnouncement = async (
   });
   await carImageRepository.save(carImage);
 
-  const payload = announcementSchemaRequest.parse(requestData);
   const newAnnouncement = announcementRepository.create({
     ...payload,
     car: car,
