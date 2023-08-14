@@ -1,6 +1,10 @@
 import { Router } from "express";
-import { listAnnouncementsController } from "../../controllers/announcements/listAnnouncement.controllers";
+import {
+  createAnnouncementController,
+  listAnnouncementsController,
+} from "../../controllers/announcements";
 
-export const announcementRoutes: Router = Router()
+export const announcementRoutes: Router = Router();
 
-announcementRoutes.get("", listAnnouncementsController)
+announcementRoutes.post("", createAnnouncementController);
+announcementRoutes.get("", listAnnouncementsController);
