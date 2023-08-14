@@ -5,6 +5,9 @@ export const listAnnouncementsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const announcements = await listAnnouncementsService()
+  const { page, pageSize } = req.query
+  const defaultPageSize: number = 16
+  const actualPageSize: number = Number(pageSize) || defaultPageSize
+  const announcements = await listAnnouncementsService(Number(page), actualPageSize)
   return res.json(announcements)
 }
