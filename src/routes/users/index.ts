@@ -12,4 +12,4 @@ userRoutes.delete("/:id", user, DeleteUserController)
 
 const loginRoutes = Router()
 
-loginRoutes.post("/login", LoginController)
+loginRoutes.post("/login")

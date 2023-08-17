@@ -1,6 +1,6 @@
 import { Repository } from "typeorm"
 import { AppDataSource } from "../../data-source"
-import { Announcement, announcement } from "../../entities"
+import { Announcement } from "../../entities"
 import { AppError } from "../../errors/AppError"
 import { NextFunction, Request, Response } from "express";
 

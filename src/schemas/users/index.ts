@@ -30,3 +30,8 @@ export const usersResponseSchema = userResponseSchema.array()
 export const userUpdateSchema = userCreateSchema.partial().omit({
     cpf: true
 })
+
+export const loginSchema = z.object({
+    email: z.string().email().max(125),
+    password: z.string().max(120),
+})
