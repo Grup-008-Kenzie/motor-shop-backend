@@ -9,7 +9,7 @@ import cors from "cors";
 export const app: Application = express();
 
 app.use(express.json());
-app.use("/announcements", announcementRoutes);
 app.use(cors());
+app.use("/announcements", announcementRoutes);
 app.use("/cars", carsRoutes);
 app.use(handleErros);
