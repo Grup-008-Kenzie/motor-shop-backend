@@ -1,15 +1,22 @@
 import { Router } from "express";
-import { CreateUserController, GetUsersController, RetrieveUserController, UpdateUserController, DeleteUserController } from "../../controllers/users";
-import { user } from "../../middlewares/users";
+import {
+  CreateUserController,
+  GetUsersController,
+  RetrieveUserController,
+  UpdateUserController,
+  DeleteUserController,
+  LoginController,
+} from "../../controllers/users";
+import { token, user } from "../../middlewares/users";
 
-const userRoutes = Router()
+const userRoutes = Router();
 
-userRoutes.post("", CreateUserController)
-userRoutes.get("", GetUsersController)
-userRoutes.get("/:id", user, RetrieveUserController)
-userRoutes.patch("/:id", user, UpdateUserController)
-userRoutes.delete("/:id", user, DeleteUserController)
+userRoutes.post("", CreateUserController);
+userRoutes.get("", token, GetUsersController);
+userRoutes.get("/:id", token, user, RetrieveUserController);
+userRoutes.patch("/:id", token, user, UpdateUserController);
+userRoutes.delete("/:id", token, user, DeleteUserController);
 
-const loginRoutes = Router()
+const loginRoutes = Router();
 
-loginRoutes.post("/login", LoginController)
+loginRoutes.post("/login", LoginController);
