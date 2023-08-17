@@ -36,6 +36,6 @@ export class Announcement {
     @JoinColumn()
     image: CarImage;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, seller => seller.announcement)
     seller: User;
 }

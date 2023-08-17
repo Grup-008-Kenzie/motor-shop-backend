@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { announcement } from "../../middlewares/announcements";
-import { CreateAnnouncementController, GetAnnouncementsController, RetrieveAnnouncementController, UpdateAnnouncementController, DeleteAnnouncementController } from "../../controllers/announcements";
 
-const announcementRoutes = Router()
+import {
+  createAnnouncementController,
+  listAnnouncementsController,
+} from "../../controllers/announcements";
 
-announcementRoutes.post("", CreateAnnouncementController)
-announcementRoutes.get("", GetAnnouncementsController)
-announcementRoutes.get("/:id", announcement, RetrieveAnnouncementController)
-announcementRoutes.patch("/:id", announcement, UpdateAnnouncementController)
-announcementRoutes.delete("/:id", announcement, DeleteAnnouncementController)
+export const announcementRoutes: Router = Router();
 
+announcementRoutes.post("", createAnnouncementController);
+announcementRoutes.get("", listAnnouncementsController);
