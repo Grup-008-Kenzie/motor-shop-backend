@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { announcementRepository, userRepository } from "../../repositories";
 
-
 export const user =
   async () => async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.id;
@@ -12,7 +11,6 @@ export const user =
     if (!user) {
       throw new AppError("User not found", 404);
     }
-    res.locals.id = id;
     return next();
   };
 

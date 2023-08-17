@@ -8,19 +8,17 @@ import {
   carImageRepository,
   userRepository,
 } from "../../repositories";
-import { announcementSchemaRequest } from "../../schemas/announcements";
 
-const createAnnouncement = async (
-  requestData: TAnnouncementRequest,
+export const createAnnouncement = async (
+  data: TAnnouncementRequest,
   res: Response
 ) => {
-  const { id: userId } = res.locals;
-  const data = announcementSchemaRequest.parse(requestData);
+  const { id: userId } = res.locals; //id ilustrativo.
 
   const car = await carRepository.findOne({
     where: {
-      brand: requestData.brand,
-      model: requestData.model,
+      brand: data.brand,
+      model: data.model,
     },
   });
 
@@ -54,5 +52,3 @@ const createAnnouncement = async (
   await announcementRepository.save(newAnnouncement);
   return newAnnouncement;
 };
-
-export { createAnnouncement };
