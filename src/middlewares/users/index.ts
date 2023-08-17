@@ -8,8 +8,8 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors/AppError";
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
-
+import jwt from "jsonwebtoken";
+import { announcementRepository, userRepository } from "../../repositories";
 export const user =
   async () => async (req: Request, res: Response, next: NextFunction) => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User);
@@ -19,8 +19,6 @@ export const user =
     if (!user) {
       throw new AppError("User not found", 404);
     }
-
-    res.locals.id = id; //id ilustrativo.
 
     return next();
   };
