@@ -4,6 +4,6 @@ import { carRepository } from "../../repositories";
 
 export const ListCarsService = async (): Promise<Car[]> => {
   const car: Car[] | undefined = await carRepository.find();
-  if (!car) throw new AppError("Car not found.", 404);
+  if (!car) throw new AppError("No cars registered yet.", 404);
   return car;
 };

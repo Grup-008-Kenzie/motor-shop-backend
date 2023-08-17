@@ -8,6 +8,7 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors/AppError";
 import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
 
 export const user =
   async () => async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +20,7 @@ export const user =
       throw new AppError("User not found", 404);
     }
 
-    res.locals.id = id;
+    res.locals.id = id; //id ilustrativo.
 
     return next();
   };

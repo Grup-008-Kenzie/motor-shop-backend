@@ -6,7 +6,7 @@ export const createAnnouncementController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const newAnnouncement = createAnnouncement(req.body, res);
+  const newAnnouncement = await createAnnouncement(req.body, res);
   return res.status(201).json(newAnnouncement);
 };
 
