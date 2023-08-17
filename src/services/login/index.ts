@@ -1,14 +1,13 @@
-import { AppDataSource } from "../../../data-source";
-import { User } from "../../../entities";
-import { AppError } from "../../../errors/AppError";
+import { AppDataSource } from "../../data-source";
+import { User } from "../../entities";
+import { AppError } from "../../errors/AppError";
 import { Repository } from "typeorm";
-import { TLogin } from "../../../interfaces/users";
+import { TLogin } from "../../interfaces/users";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 
-const loginService = async (res: Response, userData: TLogin): Promise<string> => {
+const loginService = async (userData: TLogin): Promise<string> => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User);
-
     const user: User | null = await userRepo.findOneBy({
         email: userData.email,
     });

@@ -1,28 +1,18 @@
-/// middleware isSeller?
-/// middleware isEmailAlreadyInUse?
-/// middleware isCPFAlreadyInUse?
-/// middleware isTokenValid?
-
-import { Repository } from "typeorm";
-import { AppDataSource } from "../../data-source";
-import { User } from "../../entities";
 import { AppError } from "../../errors/AppError";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { announcementRepository, userRepository } from "../../repositories";
 
 
 export const user =
   async () => async (req: Request, res: Response, next: NextFunction) => {
-    const userRepo: Repository<User> = AppDataSource.getRepository(User);
     const id: string = req.params.id;
-    const user = await userRepo.findOneBy({ id: id });
+    const user = await userRepository.findOneBy({ id: id });
 
     if (!user) {
       throw new AppError("User not found", 404);
     }
-
     res.locals.id = id;
-
     return next();
   };
 
@@ -40,4 +30,26 @@ export const token = async () => async (req: Request, res: Response, next: NextF
     res.locals.id = decoded.sub
     return next()
   })
+}
+
+export const seller = async () => async (req: Request, res: Response, next: NextFunction) => {
+  const id = res.locals.id
+  const user = await userRepository.findOneBy({ id: id });
+  const ann = await
+    announcementRepository.findOneBy({ id: req.body.announcement })
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  if (!ann) {
+    throw new AppError("Announcement not found", 404);
+  }
+
+  if (ann.seller.id !== id) {
+    throw new AppError("User is not the owner for this announcement", 403);
+  }
+
+  return next()
+
 }
