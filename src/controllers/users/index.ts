@@ -1,5 +1,9 @@
-import { Response, Request } from "express";
+import { Request } from "express";
+import { Response } from "express";
+
 import { CreateUserService, GetUsersService, RetrieveUserService, UpdateUserService, DeleteUserService } from "../../services/users";
+import { TLogin } from "../../interfaces/users";
+import loginService from "../../services/login";
 
 const CreateUserController = async (req: Request, res: Response) => {
     const newUser = await CreateUserService(req.body);
@@ -30,7 +34,9 @@ const DeleteUserController = async (req: Request, res: Response) => {
 };
 
 const LoginController = async (req: Request, res: Response) => {
-
+    const userData: TLogin = req.body
+    const token = await loginService(userData)
+    return res.status(200).json({ token })
 }
 
-export { CreateUserController, UpdateUserController, DeleteUserController, RetrieveUserController, GetUsersController }
+export { CreateUserController, UpdateUserController, DeleteUserController, RetrieveUserController, GetUsersController, LoginController }
