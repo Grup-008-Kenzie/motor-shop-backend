@@ -11,8 +11,8 @@ const CreateUserController = async (req: Request, res: Response) => {
 };
 
 const GetUsersController = async (req: Request, res: Response) => {
-    const Users = await GetUsersService();
-    return res.status(200).json(Users);
+    const users = await GetUsersService();
+    return res.status(200).json(users);
 };
 
 const RetrieveUserController = async (req: Request, res: Response) => {

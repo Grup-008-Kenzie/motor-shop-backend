@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { addressSchema } from '../address';
+import { addressSchemaRequest } from '../address';
 import { announcementSchema } from '../announcements';
 
 export const userSchema = z.object({
@@ -12,8 +12,8 @@ export const userSchema = z.object({
     description: z.string().nullable(),
     is_seller: z.boolean(),
     password: z.string().max(120),
-    address: addressSchema,
-    announcement: announcementSchema
+    address: addressSchemaRequest,
+    announcement: announcementSchema.optional()
 });
 
 export const userCreateSchema = userSchema.omit({

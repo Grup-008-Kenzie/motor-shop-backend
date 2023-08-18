@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import { createAnnouncement } from "../../services/announcements/createAnnouncement.service";
 import { listAnnouncementsService } from "../../services/announcements/listAnnouncement.service";
+import { deleteAnnouncementService } from "../../services/announcements/deleteAnnouncement.service";
 
 
 export const createAnnouncementController = async (
@@ -38,14 +39,11 @@ export const listAnnouncementsController = async (
 ///  return res.status(200).json(updatedannouncement);
 ///};
 ///
-///const DeleteAnnouncementController = async (req: Request, res: Response) => {
-///  const announcementId: string = (req.params.id);
-///  const result = await DeleteAnnouncementService(announcementId);
-///  return res.status(200).json(result);
-///};
-///
-///export {
-///    DeleteAnnouncementController, UpdateAnnouncementController, RetrieveAnnouncementController, 
-///}
+export const DeleteAnnouncementController = async (req: Request, res: Response) => {
+  const announcementId: string = (req.params.id);
+  const result = await deleteAnnouncementService(announcementId);
+  return res.status(200).json(result);
+};
+
 
 

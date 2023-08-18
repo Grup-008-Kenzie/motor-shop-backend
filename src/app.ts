@@ -5,7 +5,7 @@ import { handleErros } from "./errors/errorHandler";
 import { announcementRoutes } from "./routes/announcements/index";
 import { carsRoutes } from "./routes/cars";
 import cors from "cors"
-import { userRoutes } from "./routes/users";
+import userRoutes from "./routes/users";
 
 export const app: Application = express();
 
