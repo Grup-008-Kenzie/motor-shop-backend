@@ -1,4 +1,4 @@
-import { Response, Request } from "express"; import { RetrieveAnnouncementService, UpdateAnnouncementService, DeleteAnnouncementService } from "../../services/announcements";
+import { Response, Request } from "express";
 import { createAnnouncement } from "../../services/announcements/createAnnouncement.service";
 import { listAnnouncementsService } from "../../services/announcements/listAnnouncement.service";
 
@@ -26,26 +26,26 @@ export const listAnnouncementsController = async (
 };
 
 
-const RetrieveAnnouncementController = async (req: Request, res: Response) => {
-  const announcementId: string = (req.params.id);
-  const announcement = await RetrieveAnnouncementService(announcementId);
-  return res.status(200).json(announcement);
-};
-
-const UpdateAnnouncementController = async (req: Request, res: Response) => {
-  const announcementId: string = (req.params.id);
-  const updatedannouncement = await UpdateAnnouncementService(req.body, announcementId);
-  return res.status(200).json(updatedannouncement);
-};
-
-const DeleteAnnouncementController = async (req: Request, res: Response) => {
-  const announcementId: string = (req.params.id);
-  const result = await DeleteAnnouncementService(announcementId);
-  return res.status(200).json(result);
-};
-
-export {
-    DeleteAnnouncementController, UpdateAnnouncementController, RetrieveAnnouncementController, 
-}
+///const RetrieveAnnouncementController = async (req: Request, res: Response) => {
+///  const announcementId: string = (req.params.id);
+///  const announcement = await RetrieveAnnouncementService(announcementId);
+///  return res.status(200).json(announcement);
+///};
+///
+///const UpdateAnnouncementController = async (req: Request, res: Response) => {
+///  const announcementId: string = (req.params.id);
+///  const updatedannouncement = await UpdateAnnouncementService(req.body, announcementId);
+///  return res.status(200).json(updatedannouncement);
+///};
+///
+///const DeleteAnnouncementController = async (req: Request, res: Response) => {
+///  const announcementId: string = (req.params.id);
+///  const result = await DeleteAnnouncementService(announcementId);
+///  return res.status(200).json(result);
+///};
+///
+///export {
+///    DeleteAnnouncementController, UpdateAnnouncementController, RetrieveAnnouncementController, 
+///}
 
 

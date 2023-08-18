@@ -6,4 +6,4 @@ type TUserCreate = z.infer<typeof userCreateSchema>
 type TUserUpdate = z.infer<typeof userUpdateSchema>
 type TLogin = z.infer<typeof loginSchema>
 
-export { TUser, TUserCreate,TUserUpdate, TLogin }
+export { TUser, TUserCreate, TUserUpdate, TLogin }

@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
-import { TUserCreate, TUserUpdate } from "../../interfaces/users";
+import { TUserCreate } from "../../interfaces/users";
+import { TUserUpdate } from "../../interfaces/users";
 import { Address, User } from "../../entities";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/AppError";
@@ -22,7 +23,7 @@ export const CreateUserService = async (data: TUserCreate) => {
     }
 
     const addressRepo: Repository<Address> = AppDataSource.getRepository(Address)
-    const addressCheck: Address | null = await addressRepo.findOne(address)
+    const addressCheck: Address | null = await addressRepo.findOneBy({ id: address.id });
     if (addressCheck) {
         throw new AppError("Unique address informations already in use", 409)
     }
@@ -30,7 +31,7 @@ export const CreateUserService = async (data: TUserCreate) => {
     const hashedPassword = await hash(password, 10)
 
     const newUser = userRepo.create({
-        email, cpf, phone_number, address, birthdate, name, password: hashedPassword
+        email, cpf, phone_number, address, birthdate, name, password: hashedPassword, description
     })
     await userRepo.save(newUser)
     return userSchema.parse(newUser)
