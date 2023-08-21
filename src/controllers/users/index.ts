@@ -41,7 +41,7 @@ const DeleteUserController = async (req: Request, res: Response) => {
 
 const LoginController = async (req: Request, res: Response) => {
   const userData: TLogin = req.body;
-  const token = await loginService(userData);
+  const token = await loginService(res, userData);
   return res.status(200).json({ token });
 };
 

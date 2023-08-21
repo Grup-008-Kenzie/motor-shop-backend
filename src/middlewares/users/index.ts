@@ -12,7 +12,7 @@ export const user =
       throw new AppError("User not found", 404);
     }
     res.locals.id = id;
-    return next();
+    next();
   };
 
 export const token =
@@ -28,8 +28,8 @@ export const token =
       if (error) throw new AppError(error.message, 401);
 
       res.locals.id = decoded.sub;
-      return next();
     });
+    next();
   };
 
 export const seller =
@@ -52,5 +52,5 @@ export const seller =
       throw new AppError("User is not the owner for this announcement", 403);
     }
 
-    return next();
+    next();
   };

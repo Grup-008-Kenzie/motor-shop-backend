@@ -13,7 +13,7 @@ export const createAnnouncement = async (
   data: TAnnouncementRequest,
   res: Response
 ) => {
-  const { id: userId } = res.locals; //id ilustrativo.
+  const { id: userId } = res.locals;
 
   const car = await carRepository.findOne({
     where: {
