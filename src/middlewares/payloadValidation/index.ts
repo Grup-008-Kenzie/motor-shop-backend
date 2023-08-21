@@ -6,7 +6,7 @@ const payloadValidationMiddleware =
   (req: Request, res: Response, next: NextFunction): void => {
     const validateData = schema.parse(req.body);
     req.body = validateData;
-    return next();
+    next();
   };
 
 export { payloadValidationMiddleware };
