@@ -14,3 +14,5 @@ announcementRoutes.post(
   createAnnouncementController
 );
 announcementRoutes.get("", listAnnouncementsController);
+///announcementRoutes.patch("/:id", updateAnnouncementController);
+///announcementRoutes.delete("/:id", deleteAnnouncementController);
