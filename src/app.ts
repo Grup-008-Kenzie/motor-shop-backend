@@ -5,7 +5,8 @@ import { handleErros } from "./errors/errorHandler";
 import { announcementRoutes } from "./routes/announcements/index";
 import { carsRoutes } from "./routes/cars";
 import cors from "cors";
-import { loginRoutes, userRoutes } from "./routes/users";
+import { userRoutes } from "./routes/users";
+import { loginRoutes } from "./routes/login";
 
 export const app: Application = express();
 
@@ -15,4 +16,5 @@ app.use("/users", userRoutes)
 app.use("/login", loginRoutes)
 app.use("/announcements", announcementRoutes);
 app.use("/cars", carsRoutes);
+app.use("/user", userRoutes)
 app.use(handleErros);
