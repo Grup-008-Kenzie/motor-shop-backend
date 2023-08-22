@@ -39,7 +39,7 @@ export class User {
   @Column({ type: "boolean", default: false })
   is_seller: boolean;
 
-  @Column({type:"boolean", default:false})
+  @Column({ type: "boolean", default: false })
   admin: boolean;
 
   @Column({ type: "varchar", length: 120, select: false })

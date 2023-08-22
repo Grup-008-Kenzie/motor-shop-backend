@@ -1,59 +1,62 @@
 import { Response } from "express";
 import { AppError } from "../../errors/AppError";
 import {
-    announcementRepository,
-    carRepository,
-    carImageRepository,
-    userRepository,
+  announcementRepository,
+  carRepository,
+  carImageRepository,
+  userRepository,
 } from "../../repositories";
 
 const updateAnnouncementService = async (
-    requestData: any,
-    announcementId: string,
-    res: Response
+  requestData: any,
+  announcementId: string,
+  res: Response
 ) => {
-    const { id: userId } = res.locals;
+  const { id: userId } = res.locals;
 
-    const announcement = await announcementRepository.findOne({where:{id: announcementId}});
-    if(!announcement) throw new AppError("Announcement not found.", 404);
-    if(announcement.seller != userId) throw new AppError("You don't have permission.", 403)
+  const announcement = await announcementRepository.findOne({
+    where: { id: announcementId },
+  });
+  if (!announcement) throw new AppError("Announcement not found.", 404);
+  if (announcement.seller != userId)
+    throw new AppError("You don't have permission.", 403);
 
-    const user = await userRepository.findOne({
-        where: {
-            id: userId,
-        },
-    });
+  const user = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+  });
 
-    if (!user) throw new AppError("User not found", 404);
+  if (!user) throw new AppError("User not found", 404);
 
-    const car = await carRepository.findOne({
-        where: {
-            brand: requestData.brand,
-            model: requestData.model,
-        },
-    });
+  const car = await carRepository.findOne({
+    where: {
+      brand: requestData.brand,
+      model: requestData.model,
+    },
+  });
 
-    if (!car) throw new AppError("Car not found", 404);
+  if (!car) throw new AppError("Car not found", 404);
 
-    const { brand, model, front_image, first_image, second_image, ...payload } =
-        requestData;
+  const { brand, model, front_image, first_image, second_image, ...payload } =
+    requestData;
 
-    const carImage = carImageRepository.create({
-        front_image,
-        first_image,
-        second_image,
-    });
-    await carImageRepository.save(carImage);
+  const carImage = carImageRepository.create({
+    front_image,
+    first_image,
+    second_image,
+  });
+  await carImageRepository.save(carImage);
 
-    const newAnnouncement = announcementRepository.create({
-        ...payload,
-        car,
-        image: carImage,
-        seller: user,
-    });
+  const newAnnouncement = announcementRepository.create({
+    ...payload,
+    car,
+    image: carImage,
+    seller: user,
+  });
 
-    await announcementRepository.save(newAnnouncement);
-    return newAnnouncement;
+  await announcementRepository.save(newAnnouncement);
+  return newAnnouncement;
 };
 
 export { updateAnnouncementService };

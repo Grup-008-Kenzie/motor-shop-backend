@@ -6,7 +6,10 @@ import jwt from "jsonwebtoken";
 import { Response } from "express";
 import { userRepository } from "../../repositories";
 
-const loginService = async (res: Response, userData: TLogin): Promise<string> => {
+export const loginService = async (
+  res: Response,
+  userData: TLogin
+): Promise<string> => {
   const user: User | null = await userRepository.findOneBy({
     email: userData.email,
   });
@@ -32,12 +35,10 @@ const loginService = async (res: Response, userData: TLogin): Promise<string> =>
     }
   );
 
-  res.locals.token = token
-  res.locals.id = user.id
-  res.locals.isSeller = user.is_seller
-  res.locals.admin = user.admin
+  res.locals.token = token;
+  res.locals.id = user.id;
+  res.locals.isSeller = user.is_seller;
+  res.locals.admin = user.admin;
 
   return token;
 };
-
-export default loginService;

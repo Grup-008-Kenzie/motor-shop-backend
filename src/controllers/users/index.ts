@@ -6,7 +6,7 @@ import { retrieveUserService } from "../../services/users/retrieveUser.service";
 import { updateUserService } from "../../services/users/updateUser.service";
 import { deleteUserService } from "../../services/users/deleteUser.service";
 import { TLogin } from "../../interfaces/users";
-import loginService from "../../services/login";
+import { loginService } from "../../services/login";
 
 export const createUserController = async (req: Request, res: Response) => {
   const newUser = await createUserService(req.body);
