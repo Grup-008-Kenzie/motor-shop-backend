@@ -21,6 +21,7 @@ export const userCreateSchema = userSchema.omit({
   id: true,
   is_seller: true,
   announcement: true,
+  admin: true
 });
 
 export const userResponseSchema = userSchema.omit({
