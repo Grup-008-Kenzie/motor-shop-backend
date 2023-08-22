@@ -44,12 +44,12 @@ export const CreateUserService = async (data: TUserCreate) => {
 export const GetUsersService = async () => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User)
     const users: User[] = await userRepo.find()
-    return usersResponseSchema.parse(users)
+    return users /// adicionar parse de schema
 }
 export const RetrieveUserService = async (userId: string) => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User)
     const user = await userRepo.findOneBy({ id: userId })
-    return userResponseSchema.parse(user)
+    return (user) /// adicionar parse de schema e buscar id no locals
 }
 
 export const UpdateUserService = async (data: TUserUpdate, userId: string) => {
@@ -57,13 +57,11 @@ export const UpdateUserService = async (data: TUserUpdate, userId: string) => {
     const user = await userRepo.findOneByOrFail({ id: userId })
     const { email, address, birthdate, description, name, password, phone_number } = data
 
-    const emailCheck = await userRepo
-        .createQueryBuilder("users")
-        .where("user.email = :email", { email: email })
-        .getCount()
-
-    if (emailCheck > 0) {
-        throw new AppError("Unique email already in use", 409)
+    if (email) {
+        const existingUserWithEmail = await userRepo.findOne({ where: { email } });
+        if (existingUserWithEmail) {
+            throw new AppError("Email is already in use", 409);
+        }
     }
 
     if (password) {
@@ -72,10 +70,11 @@ export const UpdateUserService = async (data: TUserUpdate, userId: string) => {
     } else {
         Object.assign(user, { email, phone_number, address, birthdate, description, name });
     }
+    
 
     await userRepo.save(user);
 
-    return userResponseSchema.parse(user)
+    return (user)
 }
 export const DeleteUserService = async (userId: string) => {
     const userRepo: Repository<User> = AppDataSource.getRepository(User)
