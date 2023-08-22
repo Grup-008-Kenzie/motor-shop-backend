@@ -1,7 +1,10 @@
 import { Router } from "express";
 import {
+  DeleteAnnouncementController,
   createAnnouncementController,
   listAnnouncementsController,
+  listSellerAnnouncementsController,
+  updateAnnouncementController,
 } from "../../controllers/announcements";
 import { announcementSchemaRequest } from "../../schemas/announcements";
 import { payloadValidationMiddleware } from "../../middlewares/payloadValidation";
@@ -14,5 +17,6 @@ announcementRoutes.post(
   createAnnouncementController
 );
 announcementRoutes.get("", listAnnouncementsController);
-///announcementRoutes.patch("/:id", updateAnnouncementController);
-///announcementRoutes.delete("/:id", deleteAnnouncementController);
+announcementRoutes.get("/:id", listSellerAnnouncementsController);
+announcementRoutes.patch("/:id", updateAnnouncementController);
+announcementRoutes.delete("/:id", DeleteAnnouncementController);

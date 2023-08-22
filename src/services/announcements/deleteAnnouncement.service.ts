@@ -1,10 +1,8 @@
-import { Repository } from "typeorm";
 import { Announcement } from "../../entities"
-import { AppDataSource } from "../../data-source";
+import { announcementRepository } from "../../repositories";
 
 export const deleteAnnouncementService = async (id: string): Promise<string> => {
-    const announcementRepository: Repository<Announcement> = AppDataSource.getRepository(Announcement)
     const announcement: Announcement = await announcementRepository.findOneByOrFail({ id: id })
-    await announcementRepository.softRemove(announcement)
+    await announcementRepository.remove(announcement)
     return "Announcement deleted successfully."
 }

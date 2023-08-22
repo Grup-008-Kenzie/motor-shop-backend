@@ -23,7 +23,6 @@ const loginService = async (res: Response, userData: TLogin): Promise<string> =>
   const token: string = jwt.sign(
     {
       id: user.id,
-      is_seller: user.is_seller,
       admin: user.admin,
     },
     process.env.SECRET_KEY!,

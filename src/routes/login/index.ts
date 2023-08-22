@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { CreateUserController, GetUsersController, RetrieveUserController, UpdateUserController, DeleteUserController, LoginController } from "../../controllers/users";
-import { token, user } from "../../middlewares/users";
+import {loginController } from "../../controllers/users";
 
 export const loginRoutes = Router()
 
-loginRoutes.post("/login", LoginController)
+loginRoutes.post("/login", loginController)
