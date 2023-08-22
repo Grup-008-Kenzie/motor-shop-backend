@@ -1,40 +1,44 @@
-import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors/AppError";
-import { Repository } from "typeorm";
 import { TLogin } from "../../interfaces/users";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { Response } from "express";
+import { userRepository } from "../../repositories";
 
-const loginService = async (userData: TLogin): Promise<string> => {
-    const userRepo: Repository<User> = AppDataSource.getRepository(User);
-    const user: User | null = await userRepo.findOneBy({
-        email: userData.email,
-    });
-    if (!user) {
-        throw new AppError("Invalid credentials", 401);
+const loginService = async (res: Response, userData: TLogin): Promise<string> => {
+  const user: User | null = await userRepository.findOneBy({
+    email: userData.email,
+  });
+  if (!user) {
+    throw new AppError("Invalid credentials", 401);
+  }
+
+  const verifyPassword = bcrypt.compare(userData.password, user.password);
+
+  if (!verifyPassword) {
+    throw new AppError("Invalid credentials", 401);
+  }
+
+  const token: string = jwt.sign(
+    {
+      id: user.id,
+      is_seller: user.is_seller,
+      admin: user.admin,
+    },
+    process.env.SECRET_KEY!,
+    {
+      expiresIn: "24h",
+      subject: String(user.id),
     }
+  );
 
+  res.locals.token = token
+  res.locals.id = user.id
+  res.locals.isSeller = user.is_seller
+  res.locals.admin = user.admin
 
-    const verifyPassword = bcrypt.compare(userData.password, user.password);
-
-    if (!verifyPassword) {
-        throw new AppError("Invalid credentials", 401);
-    }
-
-    const token: string = jwt.sign(
-        {
-            id: user.id,
-        },
-        process.env.SECRET_KEY!,
-        {
-            expiresIn: "24h",
-            subject: String(user.id),
-        }
-    )
-
-    return token;
+  return token;
 };
 
-
-export default loginService
+export default loginService;

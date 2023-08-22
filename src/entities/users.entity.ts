@@ -1,4 +1,3 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -28,23 +27,25 @@ export class User {
   @Column({ type: "varchar", length: 11, unique: true })
   cpf: string;
 
-  @Column({ type: "varchar", length: 11 })
-  phone_number: string
+  @Column({ type: "varchar", length: 11, unique: true })
+  phone_number: string;
 
   @CreateDateColumn({ type: "varchar", length: 8 })
   birthdate: string;
 
   @Column({ type: "text", nullable: true })
-  description: string
+  description: string;
 
   @Column({ type: "boolean", default: false })
   is_seller: boolean;
 
+  @Column({type:"boolean", default:false})
+  admin: boolean;
 
   @Column({ type: "varchar", length: 120, select: false })
   password: string;
 
-  @OneToOne(() => Address, address => address.user)
+  @OneToOne(() => Address, (address) => address.user)
   @JoinColumn()
   address: Address;
 

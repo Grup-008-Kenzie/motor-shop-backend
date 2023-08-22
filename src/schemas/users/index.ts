@@ -11,25 +11,28 @@ export const userSchema = z.object({
     birthdate: z.string().length(8),
     description: z.string().nullable(),
     is_seller: z.boolean(),
+    admin: z.boolean(),
     password: z.string().max(120),
     address: addressSchemaRequest,
     announcement: announcementSchema.optional()
 });
 
 export const userCreateSchema = userSchema.omit({
-    id: true, is_seller: true, announcement: true
-})
+  id: true,
+  is_seller: true,
+  announcement: true,
+});
 
 export const userResponseSchema = userSchema.omit({
-    password: true
-})
+  password: true,
+});
 
-export const usersResponseSchema = userResponseSchema.array()
+export const usersResponseSchema = userResponseSchema.array();
 export const userUpdateSchema = userCreateSchema.partial().omit({
-    cpf: true
-})
+  cpf: true,
+});
 
 export const loginSchema = z.object({
-    email: z.string().email().max(125),
-    password: z.string().max(120),
-})
+  email: z.string().email().max(125),
+  password: z.string().max(120),
+});

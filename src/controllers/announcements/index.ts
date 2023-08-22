@@ -3,12 +3,11 @@ import { createAnnouncement } from "../../services/announcements/createAnnouncem
 import { listAnnouncementsService } from "../../services/announcements/listAnnouncement.service";
 import { deleteAnnouncementService } from "../../services/announcements/deleteAnnouncement.service";
 
-
 export const createAnnouncementController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const newAnnouncement = createAnnouncement(req.body, res);
+  const newAnnouncement = await createAnnouncement(req.body, res);
   return res.status(201).json(newAnnouncement);
 };
 
@@ -44,6 +43,4 @@ export const DeleteAnnouncementController = async (req: Request, res: Response) 
   const result = await deleteAnnouncementService(announcementId);
   return res.status(200).json(result);
 };
-
-
 
