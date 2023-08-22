@@ -2,6 +2,8 @@ import { Response, Request } from "express";
 import { createAnnouncement } from "../../services/announcements/createAnnouncement.service";
 import { listAnnouncementsService } from "../../services/announcements/listAnnouncement.service";
 import { deleteAnnouncementService } from "../../services/announcements/deleteAnnouncement.service";
+import { updateAnnouncementService } from "../../services/announcements/updateAnnouncement.service";
+import { listSellerAnnouncements } from "../../services/announcements/listSellerAnnouncements.service";
 
 export const createAnnouncementController = async (
   req: Request,
@@ -25,19 +27,18 @@ export const listAnnouncementsController = async (
   return res.status(200).json(announcements);
 };
 
+export const listSellerAnnouncementsController = async (req: Request, res: Response) => {
+  const sellerId: string = (req.params.id);
+  const announcement = await listSellerAnnouncements(sellerId);
+  return res.status(200).json(announcement);
+};
 
-///const RetrieveAnnouncementController = async (req: Request, res: Response) => {
-///  const announcementId: string = (req.params.id);
-///  const announcement = await RetrieveAnnouncementService(announcementId);
-///  return res.status(200).json(announcement);
-///};
-///
-///const UpdateAnnouncementController = async (req: Request, res: Response) => {
-///  const announcementId: string = (req.params.id);
-///  const updatedannouncement = await UpdateAnnouncementService(req.body, announcementId);
-///  return res.status(200).json(updatedannouncement);
-///};
-///
+export const updateAnnouncementController = async (req: Request, res: Response) => {
+  const announcementId: string = (req.params.id);
+  const updatedannouncement = await updateAnnouncementService(req.body, announcementId, res);
+  return res.status(200).json(updatedannouncement);
+};
+
 export const DeleteAnnouncementController = async (req: Request, res: Response) => {
   const announcementId: string = (req.params.id);
   const result = await deleteAnnouncementService(announcementId);
