@@ -36,7 +36,6 @@ export const loginService = async (
   );
 
   res.locals.token = token;
-  res.locals.id = user.id;
   res.locals.isSeller = user.is_seller;
   res.locals.admin = user.admin;
 
