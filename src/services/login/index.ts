@@ -1,43 +1,35 @@
 import { User } from "../../entities";
 import { AppError } from "../../errors/AppError";
 import { TLogin } from "../../interfaces/users";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { Response } from "express";
 import { userRepository } from "../../repositories";
+import { compare } from "bcryptjs";
+import { sign } from "jsonwebtoken";
+import { Response } from "express";
 
 export const loginService = async (
-  res: Response,
-  userData: TLogin
-): Promise<string> => {
-  const user: User | null = await userRepository.findOneBy({
-    email: userData.email,
+  loginData: TLogin
+): Promise<string | Response> => {
+  const user: User | null = await userRepository.findOne({
+    where: {
+      email: loginData.email,
+    },
   });
-  if (!user) {
-    throw new AppError("Invalid credentials", 401);
-  }
+  if (!user) throw new AppError("Invalid credentials", 401);
 
-  const verifyPassword = bcrypt.compare(userData.password, user.password);
+  const comparePassword = await compare(loginData.password, user.password);
+  if (!comparePassword) throw new AppError("Invalid credentials", 401);
 
-  if (!verifyPassword) {
-    throw new AppError("Invalid credentials", 401);
-  }
-
-  const token: string = jwt.sign(
+  const token = sign(
     {
       id: user.id,
       admin: user.admin,
     },
-    process.env.SECRET_KEY!,
+    String(process.env.SECRET_KEY),
     {
-      expiresIn: "24h",
       subject: String(user.id),
+      expiresIn: "1d",
     }
   );
-
-  res.locals.token = token;
-  res.locals.isSeller = user.is_seller;
-  res.locals.admin = user.admin;
 
   return token;
 };

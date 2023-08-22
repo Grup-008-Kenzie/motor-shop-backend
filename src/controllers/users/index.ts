@@ -38,6 +38,6 @@ export const deleteUserController = async (req: Request, res: Response) => {
 
 export const loginController = async (req: Request, res: Response) => {
   const userData: TLogin = req.body;
-  const token = await loginService(res, userData);
+  const token = await loginService(userData);
   return res.status(200).json({ token });
 };
