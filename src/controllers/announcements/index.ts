@@ -27,21 +27,33 @@ export const listAnnouncementsController = async (
   return res.status(200).json(announcements);
 };
 
-export const listSellerAnnouncementsController = async (req: Request, res: Response) => {
-  const sellerId: string = (req.params.id);
+export const listSellerAnnouncementsController = async (
+  req: Request,
+  res: Response
+) => {
+  const sellerId: string = req.params.id;
   const announcement = await listSellerAnnouncements(sellerId);
   return res.status(200).json(announcement);
 };
 
-export const updateAnnouncementController = async (req: Request, res: Response) => {
-  const announcementId: string = (req.params.id);
-  const updatedannouncement = await updateAnnouncementService(req.body, announcementId, res);
+export const updateAnnouncementController = async (
+  req: Request,
+  res: Response
+) => {
+  const announcementId: string = req.params.id;
+  const updatedannouncement = await updateAnnouncementService(
+    req.body,
+    announcementId,
+    res
+  );
   return res.status(200).json(updatedannouncement);
 };
 
-export const DeleteAnnouncementController = async (req: Request, res: Response) => {
-  const announcementId: string = (req.params.id);
+export const DeleteAnnouncementController = async (
+  req: Request,
+  res: Response
+) => {
+  const announcementId: string = req.params.id;
   const result = await deleteAnnouncementService(announcementId);
   return res.status(200).json(result);
 };
-
