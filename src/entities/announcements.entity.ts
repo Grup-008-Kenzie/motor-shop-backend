@@ -3,12 +3,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Car } from "./cars.entity";
 import { CarImage } from "./carsImages.entity";
 import { User } from "./users.entity";
+import { Comment } from "./comments.entity";
 
 @Entity("announcements")
 export class Announcement {
@@ -43,6 +45,11 @@ export class Announcement {
   @JoinColumn()
   image: CarImage;
 
-  @ManyToOne(() => User, (seller) => seller.announcement)
+  @OneToMany(() => Comment, (comment) => comment.announcement, {
+    nullable: true,
+  })
+  comment: Comment;
+
+  @ManyToOne(() => User)
   seller: User;
 }

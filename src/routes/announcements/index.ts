@@ -3,6 +3,7 @@ import {
   DeleteAnnouncementController,
   createAnnouncementController,
   listAnnouncementsController,
+  listFilteredAnnouncementsController,
   listSellerAnnouncementsController,
   updateAnnouncementController,
 } from "../../controllers/announcements";
@@ -23,6 +24,7 @@ announcementRoutes.get(
   isSellerMiddleware,
   listSellerAnnouncementsController
 );
+announcementRoutes.get("/filtered", listFilteredAnnouncementsController);
 announcementRoutes.patch(
   "/:id",
   isSellerMiddleware,

@@ -8,6 +8,8 @@ export const listAnnouncementsService = async (
   const announcements: Announcement[] = await announcementRepository
     .createQueryBuilder("anns")
     .leftJoinAndSelect("anns.seller", "seller")
+    .leftJoinAndSelect("anns.car", "car")
+    .leftJoinAndSelect("anns.comments", "comments")
     .orderBy("anns.car", "ASC")
     .skip((page - 1) * pageSize)
     .take(pageSize)

@@ -4,6 +4,7 @@ import { listAnnouncementsService } from "../../services/announcements/listAnnou
 import { deleteAnnouncementService } from "../../services/announcements/deleteAnnouncement.service";
 import { updateAnnouncementService } from "../../services/announcements/updateAnnouncement.service";
 import { listSellerAnnouncements } from "../../services/announcements/listSellerAnnouncements.service";
+import { listFilteredAnnouncementsService } from "../../services/announcements/listFilteredAnnouncements.service";
 
 export const createAnnouncementController = async (
   req: Request,
@@ -34,6 +35,21 @@ export const listSellerAnnouncementsController = async (
   const sellerId: string = req.params.id;
   const announcement = await listSellerAnnouncements(sellerId);
   return res.status(200).json(announcement);
+};
+
+export const listFilteredAnnouncementsController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const { page, pageSize, ...filtered } = req.query;
+  const defaultPageSize: number = 16;
+  const actualPageSize: number = Number(pageSize) || defaultPageSize;
+  const announcements = await listFilteredAnnouncementsService(
+    filtered,
+    Number(page),
+    actualPageSize
+  );
+  return res.status(200).json(announcements);
 };
 
 export const updateAnnouncementController = async (
