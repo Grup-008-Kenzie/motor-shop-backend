@@ -12,6 +12,7 @@ import {
 import { getRounds, hashSync } from "bcryptjs";
 import { Address } from "./addresses.entity";
 import { Announcement } from "./announcements.entity";
+import { Comment } from "./comments.entity";
 
 @Entity("users")
 export class User {
@@ -51,6 +52,9 @@ export class User {
 
   @OneToMany(() => Announcement, (ann) => ann.seller, { nullable: true })
   announcement: Announcement[];
+
+  @OneToMany(() => Comment, (cmt) => cmt.user, { nullable: true })
+  comment: Comment;
 
   @BeforeInsert()
   @BeforeUpdate()
