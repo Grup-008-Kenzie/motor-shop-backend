@@ -4,8 +4,6 @@ import { TCarUpdate } from "../../interfaces/cars";
 import { carRepository } from "../../repositories";
 import { carUpdateSchema } from "../../schemas/cars";
 
-// Fazer verifição com id do usuário (admin).
-
 const updateCarService = async (
   carId: string,
   requestData: TCarUpdate

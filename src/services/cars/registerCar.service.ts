@@ -4,8 +4,6 @@ import { TCarRequest } from "../../interfaces/cars";
 import { carSchemaRequest } from "../../schemas/cars";
 import { Car } from "../../entities";
 
-// Fazer verifição com id do usuário (admin).
-
 export const registerCarService = async (
   requestData: TCarRequest
 ): Promise<Response | Car> => {
