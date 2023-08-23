@@ -7,6 +7,9 @@ export class Comment {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ type: "varchar", length: 280 })
+  content: string;
+
   @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
   releaseDate: Date;
 

@@ -46,14 +46,20 @@ export class User {
   @Column({ type: "varchar", length: 120, select: false })
   password: string;
 
-  @OneToOne(() => Address, (address) => address.user)
+  @OneToOne(() => Address, (address) => address.user, { cascade: true })
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Announcement, (ann) => ann.seller, { nullable: true })
+  @OneToMany(() => Announcement, (ann) => ann.seller, {
+    nullable: true,
+    cascade: true,
+  })
   announcement: Announcement[];
 
-  @OneToMany(() => Comment, (cmt) => cmt.user, { nullable: true })
+  @OneToMany(() => Comment, (cmt) => cmt.user, {
+    nullable: true,
+    cascade: true,
+  })
   comment: Comment;
 
   @BeforeInsert()
