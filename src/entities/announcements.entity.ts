@@ -41,12 +41,15 @@ export class Announcement {
   @ManyToOne(() => Car)
   car: Car;
 
-  @OneToOne(() => CarImage, (carImage) => carImage.announcement)
+  @OneToOne(() => CarImage, (carImage) => carImage.announcement, {
+    cascade: true,
+  })
   @JoinColumn()
   image: CarImage;
 
   @OneToMany(() => Comment, (comment) => comment.announcement, {
     nullable: true,
+    cascade: true,
   })
   comment: Comment;
 
