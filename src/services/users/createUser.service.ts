@@ -1,6 +1,6 @@
 import { AppError } from "../../errors/AppError";
 import { addressRepository, userRepository } from "../../repositories";
-import { userSchema } from "../../schemas/users";
+import { userResponseSchema, userSchema } from "../../schemas/users";
 import { Address, User } from "../../entities";
 
 export const createUserService = async (data: any) => {
@@ -44,5 +44,5 @@ export const createUserService = async (data: any) => {
   });
 
   await userRepository.save(newUser);
-  return userSchema.parse(newUser);
+  return userResponseSchema.parse(newUser);
 };
