@@ -15,14 +15,14 @@ export class Address {
   @Column({ type: "varchar", length: 30 })
   city: string;
 
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar", length: 50 })
   street: string;
 
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar" })
   number: string;
 
-  @Column({ type: "varchar", length: 50 })
-  complement: string;
+  @Column({ type: "varchar", length: 50, nullable: true })
+  complement: string | null;
 
   @OneToOne(() => User, (user) => user.address)
   user: User;

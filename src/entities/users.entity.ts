@@ -43,7 +43,7 @@ export class User {
   @Column({ type: "boolean", default: false })
   admin: boolean;
 
-  @Column({ type: "varchar", length: 120, select: false })
+  @Column({ type: "varchar", length: 120})
   password: string;
 
   @OneToOne(() => Address, (address) => address.user, { cascade: true })
