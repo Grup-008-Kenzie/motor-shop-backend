@@ -3,4 +3,4 @@ import { loginController } from "../../controllers/users";
 
 export const loginRoutes = Router();
 
-loginRoutes.post("/login", loginController);
+loginRoutes.post("", loginController);
