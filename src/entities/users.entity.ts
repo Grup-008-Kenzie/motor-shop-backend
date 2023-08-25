@@ -28,14 +28,14 @@ export class User {
   @Column({ type: 'varchar', length: 11, unique: true })
   cpf: string
 
-  @Column({ type: 'varchar', length: 11, unique: true })
+  @Column({ type: 'varchar', length: 15, unique: true })
   phone_number: string
 
   @CreateDateColumn({ type: 'varchar', length: 10 })
   birthdate: string
 
   @Column({ type: 'text', nullable: true })
-  description: string
+  description: string | null
 
   @Column({ type: 'boolean', default: false })
   is_seller: boolean
