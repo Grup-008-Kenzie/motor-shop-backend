@@ -7,7 +7,7 @@ export const userSchema = z.object({
     name: z.string().max(90),
     email: z.string().email().max(125),
     cpf: z.string().max(11),
-    phone_number: z.string().max(11),
+    phone_number: z.string().max(15),
     birthdate: z.string().length(8),
     description: z.string().nullable(),
     is_seller: z.boolean(),
