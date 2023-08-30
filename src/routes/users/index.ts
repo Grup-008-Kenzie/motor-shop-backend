@@ -13,6 +13,7 @@ import { verifyNumberExistMiddleware } from "../../middlewares/users/verifyNumbe
 import { verifyCpfExistMiddleware } from "../../middlewares/users/verifyCpfExist.middleware";
 import { ensureUserExistMiddleware } from "../../middlewares/users/ensureUserExist.middleware";
 import { ensureTokenIsValidMiddleware } from "../../middlewares/users/ensureTokenIsValid.middleware";
+import { ensureUserIsOwnerMiddleware } from "../../middlewares/users/ensureUserIsOwner.middleware";
 
 export const userRoutes = Router();
 userRoutes.post(
@@ -30,6 +31,7 @@ userRoutes.patch(
   ensureDataIsValidMiddleware(userUpdateSchema),
   ensureTokenIsValidMiddleware,
   ensureUserExistMiddleware,
+  ensureUserIsOwnerMiddleware,
   verifyEmailExistMiddleware,
   verifyNumberExistMiddleware,
   updateUserController
@@ -38,5 +40,6 @@ userRoutes.delete(
   "/:id",
   ensureTokenIsValidMiddleware,
   ensureUserExistMiddleware,
+  ensureUserIsOwnerMiddleware,
   deleteUserController
 );
