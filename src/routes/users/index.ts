@@ -1,36 +1,42 @@
-import { Router } from 'express'
+import { Router } from "express";
 import {
   createUserController,
   listUsersController,
   retrieveUserController,
   updateUserController,
-  deleteUserController
-} from '../../controllers/users'
-import { token, user } from '../../middlewares/users'
-import { ensureDataIsValidMiddleware } from '../../middlewares/ensureDataIsValid.middleware'
-import { userCreateSchema, userUpdateSchema } from '../../schemas/users'
-import { verifyEmailExistMiddleware } from '../../middlewares/users/verifyEmailExist.middleware'
-import { verifyNumberExistMiddleware } from '../../middlewares/users/verifyNumberExist.middleware'
-import { verifyCpfExistMiddleware } from '../../middlewares/users/verifyCpfExist.middleware'
+  deleteUserController,
+} from "../../controllers/users";
+import { ensureDataIsValidMiddleware } from "../../middlewares/ensureDataIsValid.middleware";
+import { userCreateSchema, userUpdateSchema } from "../../schemas/users";
+import { verifyEmailExistMiddleware } from "../../middlewares/users/verifyEmailExist.middleware";
+import { verifyNumberExistMiddleware } from "../../middlewares/users/verifyNumberExist.middleware";
+import { verifyCpfExistMiddleware } from "../../middlewares/users/verifyCpfExist.middleware";
+import { ensureUserExistMiddleware } from "../../middlewares/users/ensureUserExist.middleware";
+import { ensureTokenIsValidMiddleware } from "../../middlewares/users/ensureTokenIsValid.middleware";
 
-export const userRoutes = Router()
+export const userRoutes = Router();
 userRoutes.post(
-  '',
+  "",
   ensureDataIsValidMiddleware(userCreateSchema),
   verifyEmailExistMiddleware,
   verifyCpfExistMiddleware,
   verifyNumberExistMiddleware,
   createUserController
-)
-userRoutes.get('', listUsersController)
-userRoutes.get('/:id', retrieveUserController)
+);
+userRoutes.get("", listUsersController);
+userRoutes.get("/:id", ensureUserExistMiddleware, retrieveUserController);
 userRoutes.patch(
-  '/:id',
+  "/:id",
   ensureDataIsValidMiddleware(userUpdateSchema),
-  token,
-  user,
+  ensureTokenIsValidMiddleware,
+  ensureUserExistMiddleware,
   verifyEmailExistMiddleware,
   verifyNumberExistMiddleware,
   updateUserController
-)
-userRoutes.delete('/:id', token, user, deleteUserController)
+);
+userRoutes.delete(
+  "/:id",
+  ensureTokenIsValidMiddleware,
+  ensureUserExistMiddleware,
+  deleteUserController
+);
