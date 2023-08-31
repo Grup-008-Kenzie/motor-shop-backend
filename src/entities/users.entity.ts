@@ -31,7 +31,7 @@ export class User {
   @Column({ type: "varchar", length: 15, unique: true })
   phone_number: string;
 
-  @CreateDateColumn({ type: "varchar", length: 8 })
+  @CreateDateColumn({ type: "varchar", length: 10 })
   birthdate: string;
 
   @Column({ type: "text", nullable: true })
@@ -43,7 +43,7 @@ export class User {
   @Column({ type: "boolean", default: false })
   admin: boolean;
 
-  @Column({ type: "varchar", length: 120})
+  @Column({ type: "varchar", length: 120 })
   password: string;
 
   @OneToOne(() => Address, (address) => address.user, { cascade: true })
