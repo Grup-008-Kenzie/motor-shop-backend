@@ -1,6 +1,5 @@
-import { AppError } from "../../errors/AppError";
 import { addressRepository, userRepository } from "../../repositories";
-import { userResponseSchema, userSchema } from "../../schemas/users";
+import { userResponseSchema } from "../../schemas/users";
 import { Address, User } from "../../entities";
 
 export const createUserService = async (data: any) => {
@@ -14,12 +13,6 @@ export const createUserService = async (data: any) => {
     name,
     password,
   } = data;
-
-  const findEmail = await userRepository.findOne({ where: { email } });
-  if (findEmail) throw new AppError("Email is already in use", 409);
-
-  const findCPF = await userRepository.findOne({ where: { cpf } });
-  if (findCPF) throw new AppError("CPF is already in use", 409);
 
   const newAddress: Address = addressRepository.create({
     cep: address.cep,
