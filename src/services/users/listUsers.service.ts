@@ -1,7 +1,12 @@
-import { User } from "../../entities";
 import { userRepository } from "../../repositories";
+import { usersResponseSchema } from "../../schemas/users";
 
 export const listUsersService = async () => {
-  const users: User[] = await userRepository.find();
-  return users;
+  const users = await userRepository
+    .createQueryBuilder("user")
+    .leftJoinAndSelect("user.address", "address")
+    .getMany();
+
+  const returnUsers = usersResponseSchema.parse(users);
+  return returnUsers;
 };
