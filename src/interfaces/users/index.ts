@@ -1,3 +1,4 @@
+import { DeepPartial } from "typeorm";
 import {
   loginSchema,
   userCreateSchema,
@@ -10,7 +11,7 @@ import { z } from "zod";
 
 type TUser = z.infer<typeof userSchema>;
 type TUserCreate = z.infer<typeof userCreateSchema>;
-type TUserUpdate = z.infer<typeof userUpdateSchema>;
+type TUserUpdate = DeepPartial<typeof userUpdateSchema>;
 type TUserResponse = z.infer<typeof userResponseSchema>;
 type TUsersResponse = z.infer<typeof usersResponseSchema>;
 type TLogin = z.infer<typeof loginSchema>;

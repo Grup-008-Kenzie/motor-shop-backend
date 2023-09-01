@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { addressSchemaRequest } from "../address";
+import { addressSchemaRequest, addressUpdateSchema } from "../address";
 import { announcementSchema } from "../announcements";
 
 export const userSchema = z.object({
@@ -29,8 +29,15 @@ export const userResponseSchema = userSchema.omit({
 });
 
 export const usersResponseSchema = z.array(userResponseSchema);
-export const userUpdateSchema = userCreateSchema.partial().omit({
-  cpf: true,
+
+export const userUpdateSchema = userCreateSchema
+  .omit({ address: true, cpf: true })
+  .partial();
+
+export const userUpdateSchemaResponse = userSchema.omit({
+  password: true,
+  address: true,
+  announcement: true,
 });
 
 export const loginSchema = z.object({
