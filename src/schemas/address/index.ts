@@ -13,3 +13,5 @@ export const addressSchema = z.object({
 export const addressSchemaRequest = addressSchema.omit({
   id: true,
 });
+
+export const addressUpdateSchema = addressSchemaRequest.partial();
