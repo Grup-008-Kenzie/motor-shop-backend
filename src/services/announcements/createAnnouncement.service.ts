@@ -4,7 +4,6 @@ import { AppError } from "../../errors/AppError";
 import { TAnnouncementRequest } from "../../interfaces/announcements";
 import {
   announcementRepository,
-  carRepository,
   carImageRepository,
   userRepository,
 } from "../../repositories";
@@ -14,15 +13,6 @@ export const createAnnouncement = async (
   res: Response
 ) => {
   const { id: userId } = res.locals;
-
-  const car = await carRepository.findOne({
-    where: {
-      brand: data.brand,
-      model: data.model,
-    },
-  });
-
-  if (!car) throw new AppError("Car not Found.", 404);
 
   const user = await userRepository.findOne({
     where: {
@@ -44,7 +34,6 @@ export const createAnnouncement = async (
 
   const newAnnouncement = announcementRepository.create({
     ...payload,
-    car: car,
     image: carImage,
     seller: user,
   });

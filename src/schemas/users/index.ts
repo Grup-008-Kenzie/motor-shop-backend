@@ -17,12 +17,15 @@ export const userSchema = z.object({
   announcement: announcementSchema.optional(),
 });
 
-export const userCreateSchema = userSchema.omit({
-  id: true,
-  is_seller: true,
-  announcement: true,
-  admin: true,
-});
+export const userCreateSchema = userSchema
+  .omit({
+    id: true,
+    announcement: true,
+    admin: true,
+  })
+  .extend({
+    is_seller: z.boolean().optional(),
+  });
 
 export const userResponseSchema = userSchema.omit({
   password: true,

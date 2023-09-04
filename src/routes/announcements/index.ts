@@ -18,20 +18,27 @@ announcementRoutes.post(
   payloadValidationMiddleware(announcementSchemaRequest),
   createAnnouncementController
 );
-announcementRoutes.get("", listAnnouncementsController);
+
+announcementRoutes.get("/filtered", listFilteredAnnouncementsController);
+
 announcementRoutes.get(
   "/:id",
   isSellerMiddleware,
   listSellerAnnouncementsController
 );
-announcementRoutes.get("/filtered", listFilteredAnnouncementsController);
+
+announcementRoutes.get("", listAnnouncementsController);
+
 announcementRoutes.patch(
   "/:id",
   isSellerMiddleware,
   updateAnnouncementController
 );
+
 announcementRoutes.delete(
   "/:id",
   isSellerMiddleware,
   DeleteAnnouncementController
 );
+
+export default announcementRoutes;

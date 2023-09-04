@@ -14,10 +14,10 @@ export class Announcement {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: "varchar", length: 60 })
   brand: string;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: "varchar", length: 60 })
   model: string;
 
   @Column({ type: "varchar", length: 4 })
@@ -40,6 +40,9 @@ export class Announcement {
 
   @Column({ type: "varchar", length: 100 })
   description: string;
+
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  releaseDate: Date;
 
   @OneToOne(() => CarImage, (carImage) => carImage.announcement)
   @JoinColumn()

@@ -7,11 +7,7 @@ import {
   deleteUserController,
 } from "../../controllers/users";
 import { ensureDataIsValidMiddleware } from "../../middlewares/ensureDataIsValid.middleware";
-import {
-  userCreateSchema,
-  userUpdateSchema,
-  usersResponseSchema,
-} from "../../schemas/users";
+import { userCreateSchema, userUpdateSchema } from "../../schemas/users";
 import { verifyEmailExistMiddleware } from "../../middlewares/users/verifyEmailExist.middleware";
 import { verifyNumberExistMiddleware } from "../../middlewares/users/verifyNumberExist.middleware";
 import { verifyCpfExistMiddleware } from "../../middlewares/users/verifyCpfExist.middleware";
