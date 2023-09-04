@@ -3,19 +3,22 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Car } from "./cars.entity";
 import { CarImage } from "./carsImages.entity";
 import { User } from "./users.entity";
-import { Comment } from "./comments.entity";
 
 @Entity("announcements")
 export class Announcement {
   @PrimaryGeneratedColumn("uuid")
   id: string;
+
+  @Column({ type: "varchar", length: 20 })
+  brand: string;
+
+  @Column({ type: "varchar", length: 20 })
+  model: string;
 
   @Column({ type: "varchar", length: 4 })
   year: string;
@@ -38,21 +41,10 @@ export class Announcement {
   @Column({ type: "varchar", length: 100 })
   description: string;
 
-  @ManyToOne(() => Car)
-  car: Car;
-
-  @OneToOne(() => CarImage, (carImage) => carImage.announcement, {
-    cascade: true,
-  })
+  @OneToOne(() => CarImage, (carImage) => carImage.announcement)
   @JoinColumn()
   image: CarImage;
 
-  @OneToMany(() => Comment, (comment) => comment.announcement, {
-    nullable: true,
-    cascade: true,
-  })
-  comment: Comment;
-
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (seller) => seller.announcement)
   seller: User;
 }
