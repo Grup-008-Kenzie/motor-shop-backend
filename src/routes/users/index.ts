@@ -5,6 +5,8 @@ import {
   retrieveUserController,
   updateUserController,
   deleteUserController,
+  sendResetEmailPasswordController,
+  resetPasswordController,
 } from "../../controllers/users";
 import { ensureDataIsValidMiddleware } from "../../middlewares/ensureDataIsValid.middleware";
 import { userCreateSchema, userUpdateSchema } from "../../schemas/users";
@@ -43,3 +45,5 @@ userRoutes.delete(
   ensureUserIsOwnerMiddleware,
   deleteUserController
 );
+userRoutes.post("/resetPassword", sendResetEmailPasswordController);
+userRoutes.patch("/resetPassword/:token", resetPasswordController);
