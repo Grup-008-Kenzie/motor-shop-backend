@@ -25,7 +25,7 @@ export class User {
   @Column({ type: "varchar", length: 125, unique: true })
   email: string;
 
-  @Column({ type: "varchar", length: 11, unique: true })
+  @Column({ type: "varchar", length: 15, unique: true })
   cpf: string;
 
   @Column({ type: "varchar", length: 15, unique: true })
@@ -71,4 +71,7 @@ export class User {
       this.password = hashSync(this.password, 10);
     }
   }
+
+  @Column({ type: "varchar", nullable: true })
+  reset_token: string | null;
 }
