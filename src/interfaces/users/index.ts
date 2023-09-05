@@ -16,6 +16,12 @@ type TUserResponse = z.infer<typeof userResponseSchema>;
 type TUsersResponse = z.infer<typeof usersResponseSchema>;
 type TLogin = z.infer<typeof loginSchema>;
 
+type TEmailRequest = {
+  to: string;
+  subject: string;
+  text: string;
+};
+
 export {
   TUser,
   TUserCreate,
@@ -23,4 +29,5 @@ export {
   TLogin,
   TUserResponse,
   TUsersResponse,
+  TEmailRequest,
 };
