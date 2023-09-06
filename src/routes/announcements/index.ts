@@ -12,6 +12,7 @@ import { payloadValidationMiddleware } from "../../middlewares/payloadValidation
 import { isSellerMiddleware } from "../../middlewares/announcements/EnsureIsSeller.middleware";
 import { ensureDataIsValidMiddleware } from "../../middlewares/ensureDataIsValid.middleware";
 import { ensureTokenIsValidMiddleware } from "../../middlewares/users/ensureTokenIsValid.middleware";
+import { ensureUserExistMiddleware } from "../../middlewares/users/ensureUserExist.middleware";
 
 export const announcementRoutes: Router = Router();
 
@@ -24,7 +25,7 @@ announcementRoutes.post(
 announcementRoutes.get("", listAnnouncementsController);
 announcementRoutes.get(
   "/:id",
-  isSellerMiddleware,
+  ensureUserExistMiddleware,
   listSellerAnnouncementsController
 );
 announcementRoutes.get("/filtered", listFilteredAnnouncementsController);
