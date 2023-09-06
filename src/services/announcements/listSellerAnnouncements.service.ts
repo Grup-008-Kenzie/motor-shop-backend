@@ -6,6 +6,7 @@ export const listSellerAnnouncements = async (
 ): Promise<Announcement[] | null> => {
   const sellerAnnouncements = await announcementRepository
     .createQueryBuilder("announcement")
+    .leftJoinAndSelect("announcement.image", "image")
     .where("announcement.seller = :sellerId", { sellerId })
     .getMany();
 
