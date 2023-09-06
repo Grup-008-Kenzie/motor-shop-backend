@@ -2,7 +2,6 @@ import { Response } from "express";
 import { AppError } from "../../errors/AppError";
 import {
   announcementRepository,
-  carRepository,
   carImageRepository,
   userRepository,
 } from "../../repositories";
@@ -29,15 +28,6 @@ const updateAnnouncementService = async (
 
   if (!user) throw new AppError("User not found", 404);
 
-  const car = await carRepository.findOne({
-    where: {
-      brand: requestData.brand,
-      model: requestData.model,
-    },
-  });
-
-  if (!car) throw new AppError("Car not found", 404);
-
   const { brand, model, front_image, first_image, second_image, ...payload } =
     requestData;
 
@@ -50,7 +40,6 @@ const updateAnnouncementService = async (
 
   const newAnnouncement = announcementRepository.create({
     ...payload,
-    car,
     image: carImage,
     seller: user,
   });

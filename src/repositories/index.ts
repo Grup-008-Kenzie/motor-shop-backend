@@ -1,12 +1,5 @@
 import { Repository } from "typeorm";
-import {
-  Address,
-  Announcement,
-  Car,
-  CarImage,
-  Comment,
-  User,
-} from "../entities";
+import { Address, Announcement, CarImage, Comment, User } from "../entities";
 import { AppDataSource } from "../data-source";
 
 export const addressRepository: Repository<Address> =
@@ -14,8 +7,6 @@ export const addressRepository: Repository<Address> =
 
 export const announcementRepository: Repository<Announcement> =
   AppDataSource.getRepository(Announcement);
-
-export const carRepository: Repository<Car> = AppDataSource.getRepository(Car);
 
 export const carImageRepository: Repository<CarImage> =
   AppDataSource.getRepository(CarImage);
