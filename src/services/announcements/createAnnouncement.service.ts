@@ -7,16 +7,17 @@ import {
   carImageRepository,
   userRepository,
 } from "../../repositories";
+import { TUserResponse } from "../../interfaces/users";
 
 export const createAnnouncement = async (
   data: TAnnouncementRequest,
   res: Response
 ) => {
-  const { id: userId } = res.locals;
+  const { userTokenId } = res.locals;
 
   const user = await userRepository.findOne({
     where: {
-      id: userId,
+      id: userTokenId,
     },
   });
 
