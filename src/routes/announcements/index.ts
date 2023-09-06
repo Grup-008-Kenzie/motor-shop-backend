@@ -10,12 +10,13 @@ import {
 import { announcementSchemaRequest } from "../../schemas/announcements";
 import { payloadValidationMiddleware } from "../../middlewares/payloadValidation";
 import { isSellerMiddleware } from "../../middlewares/announcements/EnsureIsSeller.middleware";
+import { ensureDataIsValidMiddleware } from "../../middlewares/ensureDataIsValid.middleware";
 
 export const announcementRoutes: Router = Router();
 
 announcementRoutes.post(
   "",
-  payloadValidationMiddleware(announcementSchemaRequest),
+  ensureDataIsValidMiddleware(announcementSchemaRequest),
   createAnnouncementController
 );
 announcementRoutes.get("", listAnnouncementsController);

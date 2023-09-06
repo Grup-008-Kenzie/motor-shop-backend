@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const announcementSchema = z.object({
   id: z.string(),
+  brand: z.string().max(60),
+  model: z.string().max(60),
   year: z.string().length(4),
   fuel_type: z.string().max(10),
   kilometer: z.string().max(6),
